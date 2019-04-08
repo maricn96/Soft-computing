@@ -63,8 +63,9 @@ def prati_broj(brojeva_proslo, frejm, x, y):
     prosao = 0
     if ((len(brojeva_proslo)) > 0):
         for broj in brojeva_proslo:
-            if (x == broj[0] or y == broj[1]): #ako se poklapa x ili y koord vec je prosao
-                prosao = 1
+            if (broj[0] == x):
+                if(broj[1] == y):#ako se poklapa x ili y koord vec je prosao
+                    prosao = 1
 
             if (prosao == 0):
                 if udaljenost_2_tacke(x, y, broj[0], broj[1]) < 20:
@@ -123,8 +124,7 @@ def za_neuronsku(izvuceni_brojevi):
     pripremljeni_brojevi = []
 
     for broj in izvuceni_brojevi:
-        skalirano = broj/255
-        pripremljeni_brojevi.append(skalirano.flatten())
+        pripremljeni_brojevi.append((broj/255).flatten())
 
     pripremljeni_brojevi = np.array(pripremljeni_brojevi, np.float32)
 
