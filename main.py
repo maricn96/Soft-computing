@@ -24,10 +24,6 @@ for brojac in range(0, 10):
     up_blue = np.array([125, 255, 255])
     mask = cv2.inRange(frejm_za_liniju, low_blue, up_blue)
 
-    can = cv2.Canny(mask, 75, 150)
-    #plt.imshow(can)
-    #plt.show()
-
     maks_distanca = 0
     retval_za_plavu = []
 
@@ -47,7 +43,6 @@ for brojac in range(0, 10):
     low_green = np.array([24, 51, 71])
     up_green = np.array([101, 255, 255])
     mask2 = cv2.inRange(frejm_za_liniju, low_green, up_green)
-    can2 = cv2.Canny(mask2, 75, 150)
     maks_distanca_g = 0
     retval_za_zelenu = []
 
@@ -79,7 +74,17 @@ for brojac in range(0, 10):
         cv2.line(frejm, (x1_zbir, y1_zbir), (x2_zbir, y2_zbir), (0, 0, 255), 2)
         cv2.line(frejm, (x1_razlika, y1_razlika), (x2_razlika, y2_razlika), (0, 0, 255), 2)
 
-        izdvojene_cifre = defs.izdvoj_cifre(frejm) #izd
+
+        #izdvoj cifre
+        low_white = np.array([180, 180, 180])
+        up_white = np.array([240, 240, 240])
+        maska_white = cv2.inRange(frejm, low_white, up_white)
+
+        kernel = (5, 5)
+        brojevi = cv2.bitwise_and(frejm, frejm, mask=maska_white)
+
+        izdvojene_cifre = cv2.GaussianBlur(cv2.cvtColor(brojevi, cv2.COLOR_BGR2GRAY), kernel, 0)
+
         lista_koordinata = defs.konture(izdvojene_cifre)
 
         for koordinata in lista_koordinata:
@@ -101,7 +106,7 @@ for brojac in range(0, 10):
             #plt.show()
             cifra = 255 - cifra
 
-            _, cifra = cv2.threshold(cifra, 128, 255, cv2.THRESH_BINARY | cv2.THRESH_OTSU) #smanjuje zamucenje
+            _, cifra = cv2.threshold(cifra, 120, 255, cv2.THRESH_BINARY | cv2.THRESH_OTSU) #smanjuje zamucenje
 
 
             #print(visina_zbir)

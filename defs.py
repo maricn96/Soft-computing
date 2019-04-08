@@ -46,19 +46,6 @@ def konture(slika):  # vraca koordinate svih kontura na slici
     return koordinate
 
 
-def izdvoj_cifre(slika): #maska koju propustamo da bi uklonili liniju i sum
-    low_white = np.array([180, 180, 180])
-    up_white = np.array([240, 240, 240])
-    maska = cv2.inRange(slika, low_white, up_white)
-
-    kernel = (5, 5)
-    brojevi = cv2.bitwise_and(slika, slika, mask=maska)
-
-    gaus = cv2.GaussianBlur(cv2.cvtColor(brojevi, cv2.COLOR_BGR2GRAY), kernel, 0)
-
-    return gaus
-
-
 def prati_broj(brojeva_proslo, frejm, x, y):
     prosao = 0
     if ((len(brojeva_proslo)) > 0):
@@ -69,7 +56,8 @@ def prati_broj(brojeva_proslo, frejm, x, y):
 
             if (prosao == 0):
                 if udaljenost_2_tacke(x, y, broj[0], broj[1]) < 20:
-                    if ((frejm - broj[2]) < 20):
+                    if ((frejm - broj[2]) < 21):
+                        print(frejm, broj[2])
                         prosao = 1
 
     if (prosao == 0):
