@@ -56,7 +56,7 @@ def prati_broj(brojeva_proslo, frejm, x, y):
 
             if (prosao == 0):
                 if udaljenost_2_tacke(x, y, broj[0], broj[1]) < 20:
-                    if ((frejm - broj[2]) < 21):
+                    if ((frejm - broj[2]) < 20):
                         print(frejm, broj[2])
                         prosao = 1
 
